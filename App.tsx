@@ -113,7 +113,7 @@ export default function App() {
                 textAlign="left"
                 fontWeight={"bold"}
               >
-                Quem vai jogar?
+                Quem vai jogar? 🎾
               </Text>
 
               <HStack
@@ -158,63 +158,76 @@ export default function App() {
           )}
 
           {step === 2 && (
-            <HStack w="100%" justifyContent="space-between" mx="5">
-              <VStack w="49%">
-                <Text>{namePlayerOne}</Text>
-                <Text fontSize={32} fontWeight={"bold"}>
-                  {pointsPlayerOne}
-                </Text>
-                <Button
-                  h="12"
-                  background="tertiary.500"
-                  mt="4"
-                  w="100%"
-                  rounded="md"
-                  onPress={setPointsPlayer}
-                >
-                  +
-                </Button>
+            <>
+              <HStack mr="auto" mb="4">
+                <VStack>
+                  <Text fontSize={14} color="gray.400">
+                    2
+                  </Text>
+                  <Text fontSize={14} fontWeight={"bold"} color="gray.400">
+                    4
+                  </Text>
+                </VStack>
+              </HStack>
 
-                <Button
-                  h="12"
-                  background="tertiary.500"
-                  mt="2"
-                  w="100%"
-                  rounded="md"
-                  onPress={removePointsPlayer}
-                >
-                  -
-                </Button>
-              </VStack>
+              <HStack w="100%" justifyContent="space-between" mx="5">
+                <VStack w="49%">
+                  <Text>{namePlayerOne}</Text>
+                  <Text fontSize={32} fontWeight={"bold"}>
+                    {pointsPlayerOne}
+                  </Text>
+                  <Button
+                    h="12"
+                    background="tertiary.500"
+                    mt="4"
+                    w="100%"
+                    rounded="md"
+                    onPress={setPointsPlayer}
+                  >
+                    +
+                  </Button>
 
-              <VStack w="49%">
-                <Text>{namePlayerTwo}</Text>
-                <Text fontSize={32} fontWeight={"bold"}>
-                  {pointsPlayerTwo}
-                </Text>
-                <Button
-                  h="12"
-                  background="tertiary.500"
-                  mt="4"
-                  w="100%"
-                  rounded="md"
-                  onPress={setPointsSecond}
-                >
-                  +
-                </Button>
+                  <Button
+                    h="12"
+                    background="tertiary.500"
+                    mt="2"
+                    w="100%"
+                    rounded="md"
+                    onPress={removePointsPlayer}
+                  >
+                    -
+                  </Button>
+                </VStack>
 
-                <Button
-                  h="12"
-                  background="tertiary.500"
-                  mt="2"
-                  w="100%"
-                  rounded="md"
-                  onPress={removePointsPlayerTwo}
-                >
-                  -
-                </Button>
-              </VStack>
-            </HStack>
+                <VStack w="49%">
+                  <Text>{namePlayerTwo}</Text>
+                  <Text fontSize={32} fontWeight={"bold"}>
+                    {pointsPlayerTwo}
+                  </Text>
+                  <Button
+                    h="12"
+                    background="tertiary.500"
+                    mt="4"
+                    w="100%"
+                    rounded="md"
+                    onPress={setPointsSecond}
+                  >
+                    +
+                  </Button>
+
+                  <Button
+                    h="12"
+                    background="tertiary.500"
+                    mt="2"
+                    w="100%"
+                    rounded="md"
+                    onPress={removePointsPlayerTwo}
+                  >
+                    -
+                  </Button>
+                </VStack>
+              </HStack>
+            </>
           )}
         </VStack>
       </Center>
