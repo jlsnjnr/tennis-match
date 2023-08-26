@@ -1,19 +1,15 @@
 import React, { useState } from "react";
 import {
   Text,
-  Link,
   HStack,
   Center,
-  Heading,
-  Switch,
-  useColorMode,
   NativeBaseProvider,
   extendTheme,
   VStack,
-  Box,
-  Input,
   Button,
 } from "native-base";
+import { PlayerSelect } from "./components/PlayersSelect";
+import { Alert } from "react-native";
 
 const config = {
   useSystemColorMode: false,
@@ -34,6 +30,9 @@ export default function App() {
   const [pointsPlayerOne, setPointsPlayerOne] = useState(0);
   const [pointsPlayerTwo, setPointsPlayerTwo] = useState(0);
 
+  const [setsOne, setWinnerPointOne] = useState(0);
+  const [setsTwo, setWinnerPointTwo] = useState(0);
+
   const setPointsPlayer = () => {
     switch (pointsPlayerOne) {
       case 0:
@@ -46,7 +45,9 @@ export default function App() {
         setPointsPlayerOne(40);
         break;
       case 40:
-        setPointsPlayerOne(50);
+        setWinnerPointOne(setsOne + 1);
+        setPointsPlayerOne(0);
+        setPointsPlayerTwo(0);
         break;
       default:
     }
@@ -64,7 +65,9 @@ export default function App() {
         setPointsPlayerTwo(40);
         break;
       case 40:
-        setPointsPlayerTwo(50);
+        setWinnerPointTwo(setsTwo + 1);
+        setPointsPlayerTwo(0);
+        setPointsPlayerOne(0);
         break;
       default:
     }
@@ -100,80 +103,62 @@ export default function App() {
     }
   };
 
+  if (pointsPlayerOne === 40 && pointsPlayerTwo === 40) {
+    setPointsPlayerOne(0);
+    setPointsPlayerTwo(0);
+  }
+
   return (
     <NativeBaseProvider>
       <Center bgColor="muted.50" px={4} flex={1}>
-        <VStack w="full" alignItems="center">
+        <VStack
+          position="relative"
+          height="full"
+          w="full"
+          justifyContent="center"
+          alignItems="center"
+        >
           {step === 1 && (
-            <>
-              <Text
-                mr="auto"
-                fontSize={20}
-                py="4"
-                textAlign="left"
-                fontWeight={"bold"}
-              >
-                Quem vai jogar? 🎾
-              </Text>
-
-              <HStack
-                w="100%"
-                mx="5"
-                justifyContent={"space-between"}
-                alignItems="center"
-              >
-                <Input
-                  value={namePlayerOne}
-                  onChangeText={(text) => setPlayerOne(text)}
-                  h="12"
-                  placeholder="Jogador 1"
-                  w="45%"
-                  rounded="md"
-                />
-
-                <Text>X</Text>
-
-                <Input
-                  value={namePlayerTwo}
-                  onChangeText={(text) => setPlayerTwo(text)}
-                  h="12"
-                  placeholder="Jogador 2"
-                  w="45%"
-                  rounded="md"
-                />
-              </HStack>
-
-              <Button
-                h="12"
-                background="tertiary.500"
-                mt="4"
-                alignItems="center"
-                w="100%"
-                rounded="md"
-                onPress={() => setStep(step + 1)}
-              >
-                Próximo
-              </Button>
-            </>
+            <PlayerSelect
+              namePlayerOne={namePlayerOne}
+              setPlayerOne={setPlayerOne}
+              namePlayerTwo={namePlayerTwo}
+              setPlayerTwo={setPlayerTwo}
+              setStep={setStep}
+              step={step}
+            />
           )}
 
           {step === 2 && (
             <>
-              <HStack mr="auto" mb="4">
+              <HStack position="absolute" left="0" top="0" mt="10">
                 <VStack>
-                  <Text fontSize={14} color="gray.400">
-                    2
+                  <Text
+                    fontSize={20}
+                    fontWeight={setsOne > setsTwo ? "bold" : "normal"}
+                    color="gray.400"
+                  >
+                    {setsOne}
                   </Text>
-                  <Text fontSize={14} fontWeight={"bold"} color="gray.400">
-                    4
+                  <Text
+                    fontWeight={setsTwo > setsOne ? "bold" : "normal"}
+                    fontSize={20}
+                    color="gray.400"
+                  >
+                    {setsTwo}
                   </Text>
                 </VStack>
               </HStack>
 
-              <HStack w="100%" justifyContent="space-between" mx="5">
+              <HStack
+                w="100%"
+                alignItems="center"
+                justifyContent="space-between"
+                mx="5"
+              >
                 <VStack w="49%">
                   <Text>{namePlayerOne}</Text>
-                  <Text fontSize={32} fontWeight={"bold"}>
+                  <Text fontSize={42} fontWeight={"bold"}>
                     {pointsPlayerOne}
                   </Text>
                   <Button
@@ -189,19 +174,22 @@ export default function App() {
 
                   <Button
                     h="12"
-                    background="tertiary.500"
+                    borderColor="tertiary.500"
+                    borderWidth="1"
+                    backgroundColor="none"
                     mt="2"
                     w="100%"
                     rounded="md"
                     onPress={removePointsPlayer}
+                    color="tertiary.500"
                   >
-                    -
+                    <Text color="tertiary.500">-</Text>
                   </Button>
                 </VStack>
 
                 <VStack w="49%">
                   <Text>{namePlayerTwo}</Text>
-                  <Text fontSize={32} fontWeight={"bold"}>
+                  <Text fontSize={42} fontWeight={"bold"}>
                     {pointsPlayerTwo}
                   </Text>
                   <Button
@@ -217,13 +205,16 @@ export default function App() {
 
                   <Button
                     h="12"
-                    background="tertiary.500"
+                    borderColor="tertiary.500"
+                    borderWidth="1"
+                    backgroundColor="none"
                     mt="2"
                     w="100%"
                     rounded="md"
                     onPress={removePointsPlayerTwo}
+                    color="tertiary.500"
                   >
-                    -
+                    <Text color="tertiary.500">-</Text>
                   </Button>
                 </VStack>
               </HStack>
